@@ -7,6 +7,7 @@ _start: ; initialize segment registers
 	mov es, ax
 	mov ss, ax
 	mov sp, 0x7c00
+	mov bp, 0x7c00
 
 	mov ah, 2
 	mov al, SECTOR_COUNT

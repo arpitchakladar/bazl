@@ -1,3 +1,4 @@
+bits 16
 global print
 print:
 	push bp
@@ -17,5 +18,4 @@ print:
 
 	mov sp, bp
 	pop bp
-	mov sp, bp
 	ret

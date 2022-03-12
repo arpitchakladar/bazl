@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(Bazl LANGUAGES ASM_NASM)
+project(Bazl LANGUAGES ASM_NASM C)
 
-set(SECTOR_COUNT 19) # For 10k, each sector = 512 bytes and the first sector is the boot loader
+if(NOT DEFINED SECTOR_COUNT)
+	set(SECTOR_COUNT 19) # For 10k, each sector = 512 bytes and the first sector is the boot loader
+endif(NOT DEFINED SECTOR_COUNT)
 
 add_subdirectory(kernal)
 add_subdirectory(boot_loader)
