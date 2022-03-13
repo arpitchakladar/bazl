@@ -16,7 +16,7 @@ set(CMAKE_LINK_EXECUTABLE "<CMAKE_LINKER> --oformat binary -m elf_i386 -Ttext 0x
 
 # C
 ## Compile to GAS assembly and then compile the GAS file with ".code16" directive
-set(CMAKE_C_COMPILE_OBJECT "<CMAKE_C_COMPILER> -m16 -ffreestanding -S -g -nostdlib -nostartfiles  -I ${PROJECT_SOURCE_DIR}/src -o <OBJECT>.s <SOURCE> && <CMAKE_C_COMPILER> -I ${PROJECT_SOURCE_DIR}/src -m16 -ffreestanding -c -g -nostdlib -nostartfiles -o <OBJECT> <OBJECT>.s")
+set(CMAKE_C_COMPILE_OBJECT "<CMAKE_C_COMPILER> -m16 -ffreestanding -S -g -nostdlib -nostartfiles  -I ${PROJECT_SOURCE_DIR}/src -Wpointer-to-int-cast -o <OBJECT>.s <SOURCE> && <CMAKE_C_COMPILER> -I ${PROJECT_SOURCE_DIR}/src -m16 -ffreestanding -c -g -nostdlib -nostartfiles -o <OBJECT> <OBJECT>.s")
 set(CMAKE_C_LINK_EXECUTABLE ${CMAKE_LINK_EXECUTABLE})
 
 # ASM_NASM

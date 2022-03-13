@@ -27,7 +27,7 @@ cli_read:
 	mov bp, sp
 
 	mov di, [bp + 6]
-	mov dx, [bp + 10]
+	mov dx, [bp + 14]
 
 	mov cx, 2
 .loop:
@@ -36,7 +36,7 @@ cli_read:
 	mov ah, 0
 	int 0x16
 	mov ah, al
-	cmp ah, 0x0d
+	cmp ah, [bp + 10]
 	je .end
 	mov ah, al
 	cmp ah, 0x08
@@ -66,14 +66,8 @@ cli_read:
 	jmp .loop
 .end:
 
-	mov ah, 0x0e
-	mov bh, 0
-	mov al, 0x0a
-	int 0x10
-	mov al, 0x0d
-	int 0x10
 	mov al, 0x00
-	stosb
+	mov [di], al
 
 	mov sp, bp
 	pop bp

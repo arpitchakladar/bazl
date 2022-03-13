@@ -4,6 +4,7 @@ A simple CLI OS for intel 386 architecture. Operates in 16-bit real mode, and is
 ## Table Of Contents
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
+- [ToDo List](#todo-list)
 
 ### Requirements
 - cmake (>= 3.22)
@@ -29,3 +30,11 @@ make -C build
 ```sh
 qemu-system-i386 build/bazl
 ```
+
+### ToDo List
+- Add Disk I/O.
+- Create a file system.
+- Add a user/permission system.
+- Add and manage processes or external programs.
+- Add system calls.
+- Switch to 32-bit protected mode.
