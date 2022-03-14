@@ -1,5 +1,6 @@
-#include "core/string.h"
-#include "core/types.h"
+#include "utils/string.h"
+#include "utils/int.h"
+#include "utils/bool.h"
 
 bool string_equal(char *string1, char *string2) {
 	uint16_t i = 0;
@@ -23,20 +24,20 @@ uint16_t string_length(char *string) {
 	return i;
 }
 
-int16_t int_from_string(char *string, uint8_t length) {
+int16_t string_to_int(char *string, uint8_t length) {
 	int16_t result = 0;
-	int16_t position_value = 1;
+	int16_t pos_value = 1;
 
 	for (uint8_t i = 1; i <= length; i++) {
 		char digit = string[length - i];
 		if (digit >= '0' && digit <= '9')
-			result += position_value * (digit - '0');
+			result += pos_value * (digit - '0');
 		else if (digit == '-') {
 			result = -result;
 			break;
 		} else
 			break;
-		position_value *= 10;
+		pos_value *= 10;
 	}
 
 	return result;

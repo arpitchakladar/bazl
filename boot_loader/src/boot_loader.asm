@@ -9,7 +9,7 @@ _start: ; initialize segment registers
 	mov sp, 0x7c00
 	mov bp, 0x7c00
 
-	mov ah, 2
+	mov ah, 0x02
 	mov al, SECTOR_COUNT
 	mov ch, 0
 	mov cl, 2

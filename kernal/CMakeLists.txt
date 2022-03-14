@@ -11,16 +11,21 @@ set(CMAKE_C_COMPILER ${C_COMPILER})
 file(GLOB_RECURSE ASM_NASM_SOURCES "${PROJECT_SOURCE_DIR}/src/*.asm")
 file(GLOB_RECURSE C_SOURCES "${PROJECT_SOURCE_DIR}/src/*.c")
 
-# Linking command
-set(CMAKE_LINK_EXECUTABLE "<CMAKE_LINKER> --oformat binary -m elf_i386 -Ttext 0x7e00 <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
+# Linking
+set(CMAKE_EXE_LINKER_FLAGS "--oformat binary -m elf_i386 -Ttext 0x7e00")
+set(CMAKE_LINK_EXECUTABLE "<CMAKE_LINKER> <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
 
 # C
-## Compile to GAS assembly and then compile the GAS file with ".code16" directive
-set(CMAKE_C_COMPILE_OBJECT "<CMAKE_C_COMPILER> -m16 -ffreestanding -S -g -nostdlib -nostartfiles  -I ${PROJECT_SOURCE_DIR}/src -Wpointer-to-int-cast -o <OBJECT>.s <SOURCE> && <CMAKE_C_COMPILER> -I ${PROJECT_SOURCE_DIR}/src -m16 -ffreestanding -c -g -nostdlib -nostartfiles -o <OBJECT> <OBJECT>.s")
+set(CMAKE_C_FLAGS "-m16 -ffreestanding -c -g -nostdlib -nostartfiles -Wpointer-to-int-cast")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
+elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O3")
+endif ()
+
 set(CMAKE_C_LINK_EXECUTABLE ${CMAKE_LINK_EXECUTABLE})
 
 # ASM_NASM
-set(CMAKE_ASM_NASM_COMPILE_OBJECT "<CMAKE_ASM_NASM_COMPILER> -o <OBJECT> -f elf <SOURCE>")
 set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_LINK_EXECUTABLE})
 
 add_executable(kernal "${PROJECT_SOURCE_DIR}/src/kernal_loader.asm" ${ASM_NASM_SOURCES} ${C_SOURCES})

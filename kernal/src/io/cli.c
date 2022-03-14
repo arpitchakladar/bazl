@@ -1,6 +1,6 @@
 #include "io/cli.h"
-#include "core/types.h"
-#include "memory/dynamic.h"
+#include "utils/int.h"
+#include "memory/dyn.h"
 
 void cli_write_int(int16_t integer) {
 	uint8_t digit_count = 0;
@@ -12,7 +12,7 @@ void cli_write_int(int16_t integer) {
 		} while (abs_integer > 0);
 	}
 
-	char *number_string = memory_allocate(digit_count + 2);
+	char *number_string = memory_alloc(digit_count + 2);
 	char *digits_string = number_string;
 
 	if (integer < 0) {
@@ -28,5 +28,5 @@ void cli_write_int(int16_t integer) {
 	}
 
 	cli_write(number_string);
-	memory_deallocate(number_string);
+	memory_dealloc(number_string);
 }

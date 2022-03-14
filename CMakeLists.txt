@@ -2,9 +2,13 @@ cmake_minimum_required(VERSION 3.22)
 
 project(Bazl LANGUAGES ASM_NASM C)
 
-if(NOT DEFINED SECTOR_COUNT)
+if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	set (CMAKE_BUILD_TYPE "Debug")
+endif ()
+
+if (NOT DEFINED SECTOR_COUNT)
 	set(SECTOR_COUNT 19) # For 10k, each sector = 512 bytes and the first sector is the boot loader
-endif(NOT DEFINED SECTOR_COUNT)
+endif ()
 
 add_subdirectory(kernal)
 add_subdirectory(boot_loader)
