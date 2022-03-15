@@ -16,16 +16,19 @@ set(CMAKE_EXE_LINKER_FLAGS "--oformat binary -m elf_i386 -Ttext 0x7e00")
 set(CMAKE_LINK_EXECUTABLE "<CMAKE_LINKER> <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
 
 # C
-set(CMAKE_C_FLAGS "-m16 -ffreestanding -c -g -nostdlib -nostartfiles -Wpointer-to-int-cast")
+set(CMAKE_C_FLAGS "-m16 -ffreestanding -g -nostdlib -nostartfiles -Wno-pointer-to-int-cast")
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
 elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O3")
 endif ()
 
+# Convert the C code to GAS assembly and then remove all data sections, to make gas put them in text section
+set(CMAKE_C_COMPILE_OBJECT "<CMAKE_C_COMPILER> -S <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT>.s <SOURCE> && sed -i '/.section/d\;/.data/d' <OBJECT>.s && <CMAKE_C_COMPILER> -c <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT> <OBJECT>.s")
 set(CMAKE_C_LINK_EXECUTABLE ${CMAKE_LINK_EXECUTABLE})
 
 # ASM_NASM
+set(CMAKE_ASM_NASM_COMPILE_OBJECT "<CMAKE_ASM_NASM_COMPILER> <DEFINES> -f elf -o <OBJECT> <SOURCE>")
 set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_LINK_EXECUTABLE})
 
 add_executable(kernal "${PROJECT_SOURCE_DIR}/src/kernal_loader.asm" ${ASM_NASM_SOURCES} ${C_SOURCES})

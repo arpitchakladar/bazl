@@ -18,21 +18,20 @@ A simple CLI OS for intel 386 architecture. Operates in 16-bit real mode, and is
 git clone https://github.com/arpitchakladar/bazl
 cd bazl
 ```
-2. Use cmake with flags -DLINKER and -DC_COMPILER, to use i386 cross compiler and linker.
+2. Run a build script. (For the first time "i386-elf-gcc" and "i386-elf-ld" must be in your PATH)
 ```sh
-cmake -B build -DLINKER=$(where i386-elf-ld) -DC_COMPILER=$(where i386-elf-gcc)
+scripts/build-make.sh
 ```
-3. Build using the build system
+or for another generator.
 ```sh
-make -C build
+scripts/build.sh -G <generator>
 ```
-4. Run with an emulator (preferably QEMU)
+3. Run with an emulator (preferably QEMU)
 ```sh
-qemu-system-i386 build/bazl
+scripts/test-qemu.sh
 ```
 
 ### ToDo List
-- Add Disk I/O.
 - Create a file system.
 - Add a user/permission system.
 - Add and manage processes or external programs.

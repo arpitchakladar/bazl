@@ -10,7 +10,7 @@ cli_write:
 	mov si, [bp + si]
 .loop:
 	lodsb
-	or al, al
+	cmp al, 0x00
 	je .end
 	mov ah, 0x0e
 	mov bh, 0
@@ -47,12 +47,12 @@ cli_read:
 	stosb
 	jmp .end_handle_backspace
 .handle_backspace:
-	xor di, [bp + 6]
+	cmp di, [bp + 6]
 	je .end_handle_backspace
 	mov al, 0
+	mov [di], al
 	sub di, 1
 	sub cx, 2
-	mov [di], al
 	mov ah, 0x0e
 	mov bh, 0
 	mov al, 0x08
