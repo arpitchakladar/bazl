@@ -1,32 +1,32 @@
 #include "io/cli.h"
 #include "utils/int.h"
-#include "memory/dyn.h"
+#include "mem/dyn.h"
 
-void cli_write_int(int16_t integer) {
+void cli_write_int(int16_t int_num) {
 	uint8_t digit_count = 0;
-	{ // Calculate the number of digits
-		int16_t abs_integer = (integer < 0) ? (-integer) : integer;
+	{ // Calculate the int_num of digits
+		int16_t abs_int_num = (int_num < 0) ? (-int_num) : int_num;
 		do {
-			abs_integer /= 10;
+			abs_int_num /= 10;
 			digit_count ++;
-		} while (abs_integer > 0);
+		} while (abs_int_num > 0);
 	}
 
-	char *number_string = memory_alloc(digit_count + 2);
-	char *digits_string = number_string;
+	char *int_num_str = dyn_alloc(digit_count + 2);
+	char *digits_str = int_num_str;
 
-	if (integer < 0) {
-		number_string[0] = '-';
-		integer = -integer;
-		digits_string = number_string + 1;
+	if (int_num < 0) {
+		int_num_str[0] = '-';
+		int_num = -int_num;
+		digits_str = int_num_str + 1;
 	}
 
-	digits_string[digit_count] = '\0';
+	digits_str[digit_count] = '\0';
 	for (uint8_t i = 1; i <= digit_count; i++) {
-		digits_string[digit_count - i] = (integer % 10) + '0';
-		integer /= 10;
+		digits_str[digit_count - i] = (int_num % 10) + '0';
+		int_num /= 10;
 	}
 
-	cli_write(number_string);
-	memory_dealloc(number_string);
+	cli_write(int_num_str);
+	dyn_dealloc(int_num_str);
 }

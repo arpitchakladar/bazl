@@ -1,17 +1,19 @@
 bits 16
-global disk_read_sectors
-global disk_write_sectors
+global disk_read_sec
+global disk_write_sec
 
-disk_read_sectors:
+extern BOOT_DRIVE_NUMBER
+
+disk_read_sec:
 	push bp
 	mov bp, sp
 
 	mov ah, 0x02
-	mov al, [bp + 10]
-	mov ch, [bp + 14]
-	mov cl, [bp + 18]
-	mov dh, [bp + 22]
-	mov dl, [bp + 26]
+	mov al, [bp + 14]
+	mov ch, 0
+	mov cl, [bp + 10]
+	mov dh, 0
+	mov dl, [BOOT_DRIVE_NUMBER]
 	mov bx, [bp + 6]
 	int 0x13
 
@@ -19,16 +21,16 @@ disk_read_sectors:
 	pop bp
 	ret
 
-disk_write_sectors:
+disk_write_sec:
 	push bp
 	mov bp, sp
 
 	mov ah, 0x03
-	mov al, [bp + 10]
-	mov ch, [bp + 14]
-	mov cl, [bp + 18]
-	mov dh, [bp + 22]
-	mov dl, [bp + 26]
+	mov al, [bp + 14]
+	mov ch, 0
+	mov cl, [bp + 10]
+	mov dh, 0
+	mov dl, [BOOT_DRIVE_NUMBER]
 	mov bx, [bp + 6]
 	int 0x13
 

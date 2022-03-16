@@ -1,5 +1,5 @@
 # Bazl
-A simple CLI OS for intel 386 architecture. Operates in 16-bit real mode, and is written in NASM assembly and C.
+A simple CLI OS for intel 386 architecture. Runs in 16-bit real mode, and is written in NASM assembly and C.
 
 ## Table Of Contents
 - [Requirements](#requirements)
@@ -33,6 +33,7 @@ scripts/test-qemu.sh
 
 ### ToDo List
 - Create a file system.
+- Add processes and executables.
 - Add a user/permission system.
 - Add and manage processes or external programs.
 - Add system calls.

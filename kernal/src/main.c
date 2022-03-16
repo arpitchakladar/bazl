@@ -1,38 +1,38 @@
 #include "utils/bool.h"
 #include "utils/int.h"
-#include "utils/string.h"
+#include "utils/str.h"
 #include "io/cli.h"
-#include "memory/dyn.h"
+#include "mem/dyn.h"
 #include "io/disk.h"
 
 void main() {
 	cli_write("Hello From Bazl!\r\n");
-	char *name = memory_alloc(512);
-	disk_read_sectors(name, 1, 0, 23, 0, BOOT_DRIVE_NUMBER);
-	if (!string_length(name)) {
+	uintptr_t name_buf_len = 120;
+	char *name = dyn_alloc(name_buf_len);
+	disk_read_buf(name, 21, name_buf_len);
+	if (name[0] == '\0') {
 		cli_write("Enter your name : ");
-		cli_read(name, '\r', 512);
+		cli_read(name, '\r', name_buf_len);
 		cli_write("\r\n");
 	}
 	cli_write("Hi, ");
 	cli_write(name);
 	cli_write("!\r\n");
-	disk_write_sectors(name, 1, 0, 23, 0, BOOT_DRIVE_NUMBER);
-	memory_dealloc(name);
-	char *number_string = memory_alloc(6);
+	disk_write_buf(name, 21, name_buf_len);
+	char *num_str = dyn_alloc(6);
 	while (true) {
 		for (uint8_t i = 0; i < 6; i++)
-			number_string[i] = 0;
+			num_str[i] = 0;
 
 		cli_write("Add ");
-		cli_read(number_string, ' ', 6);
-		int16_t number1 = string_to_int(number_string, string_length(number_string));
+		cli_read(num_str, ' ', 6);
+		int16_t num1 = str_to_int(num_str, str_len(num_str));
 		cli_write(" + ");
-		cli_read(number_string, '\r', 6);
-		int16_t number2 = string_to_int(number_string, string_length(number_string));
+		cli_read(num_str, '\r', 6);
+		int16_t num2 = str_to_int(num_str, str_len(num_str));
 		cli_write(" = ");
-		cli_write_int(number1 + number2);
+		cli_write_int(num1 + num2);
 		cli_write(".\r\n");
 	}
-	memory_dealloc(number_string);
+	dyn_dealloc(num_str);
 }

@@ -7,7 +7,7 @@ if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 endif ()
 
 set(KERNAL_SIZE_KB 10)
-math(EXPR KERNAL_SECTOR_COUNT "(${KERNAL_SIZE_KB} * 2) - 1")
+math(EXPR KERNAL_SECTOR_COUNT "${KERNAL_SIZE_KB} * 2")
 
 add_subdirectory(kernal)
 add_subdirectory(boot_loader)
