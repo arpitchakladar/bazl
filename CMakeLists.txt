@@ -6,7 +6,7 @@ if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set (CMAKE_BUILD_TYPE "Debug")
 endif ()
 
-set(KERNAL_SIZE_KB 10)
+set(KERNAL_SIZE_KB 20)
 math(EXPR KERNAL_SECTOR_COUNT "${KERNAL_SIZE_KB} * 2")
 
 add_subdirectory(kernal)

@@ -23,8 +23,6 @@ elseif ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O3")
 endif ()
 
-# Convert the C code to GAS assembly and then remove all data sections, to make gas put them in text section
-set(CMAKE_C_COMPILE_OBJECT "<CMAKE_C_COMPILER> -S <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT>.s <SOURCE> && sed -i '/.section/d\;/.data/d' <OBJECT>.s && <CMAKE_C_COMPILER> -c <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT> <OBJECT>.s")
 set(CMAKE_C_LINK_EXECUTABLE ${CMAKE_LINK_EXECUTABLE})
 
 # ASM_NASM

@@ -6,8 +6,7 @@ cli_write:
 	push bp
 	mov bp, sp
 
-	mov si, 6
-	mov si, [bp + si]
+	mov si, [bp + 6]
 .loop:
 	lodsb
 	cmp al, 0x00
