@@ -32,7 +32,6 @@ scripts/test-qemu.sh
 ```
 
 ### ToDo List
-- Create a file system.
 - Add processes and executables.
 - Add a user/permission system.
 - Add and manage processes or external programs.

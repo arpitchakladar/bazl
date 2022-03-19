@@ -1,7 +1,8 @@
+#include "mem/dyn.h"
+
 #include "utils/int.h"
 #include "utils/bool.h"
 #include "utils/ptr.h"
-#include "mem/dyn.h"
 
 typedef struct {
 	void *ptr;
@@ -9,43 +10,46 @@ typedef struct {
 	bool occupied;
 } alloc_t;
 
-#define MAX_ALLOCATIONS 64
+#define ALLOCATION_COUNT 64
 #define alloc_entries ((alloc_t *) 0xa400)
-static void *last_alloc_ptr = alloc_entries + (sizeof(alloc_t) * MAX_ALLOCATIONS);
+static void *last_alloc_ptr = alloc_entries + (sizeof(alloc_t) * ALLOCATION_COUNT);
 
 void *dyn_alloc(uintptr_t len) {
-	alloc_t *free_entry = null_ptr;
-	bool no_freed = true;
-	for (int i = 0; i < MAX_ALLOCATIONS; i++) {
+	alloc_t free_entry = {
+		.ptr = null_ptr,
+		.len = 0,
+		.occupied = false
+	};
+	bool occupied_available = false;
+	for (int i = 0; i < ALLOCATION_COUNT; i++) {
 		alloc_t *entry = alloc_entries + i;
 		if(!entry->occupied) {
 			if (entry->len >= len) {
-				if (no_freed || free_entry->len > entry->len)
-					free_entry = entry;
-				no_freed = false;
-			} else if (no_freed && (free_entry == null_ptr || free_entry->len > entry->len))
-				free_entry = entry;
+				if (!occupied_available || free_entry.len > entry->len)
+					free_entry = *entry;
+				occupied_available = true;
+			} else if (!occupied_available && (free_entry.ptr == null_ptr || free_entry.len > entry->len))
+				free_entry = *entry;
 		}
 	}
 
-	if (no_freed) {
+	if (!occupied_available) {
 		void *next_last_alloc_ptr = last_alloc_ptr + len;
 
 		if (((uintptr_t) next_last_alloc_ptr) < 0xffff) {
-			free_entry->ptr = last_alloc_ptr;
-			free_entry->len = len;
-			free_entry->occupied = true;
+			free_entry.ptr = last_alloc_ptr;
+			free_entry.len = len;
+			free_entry.occupied = true;
 			last_alloc_ptr = next_last_alloc_ptr;
-		} else
-			free_entry->ptr = null_ptr;
+		}
 	}
 
-	return free_entry->ptr;
+	return free_entry.ptr;
 }
 
 void dyn_dealloc(void *ptr) {
 	if (ptr != null_ptr) {
-		for (int i = 0; i < MAX_ALLOCATIONS; i++) {
+		for (int i = 0; i < ALLOCATION_COUNT; i++) {
 			alloc_t *entry = alloc_entries + i;
 			uintptr_t offset = ptr - entry->ptr;
 			if (offset == 0) {
@@ -54,7 +58,7 @@ void dyn_dealloc(void *ptr) {
 			} else if (offset > 0 && offset < entry->len) {
 				alloc_t *new_entry = null_ptr;
 				uintptr_t new_entry_len = entry->len - offset;
-				for (int j = 0; j < MAX_ALLOCATIONS; j++) {
+				for (int j = 0; j < ALLOCATION_COUNT; j++) {
 					alloc_t *current_entry = alloc_entries + j;
 					if (!current_entry->occupied && new_entry_len > current_entry->len && (new_entry == null_ptr || new_entry->len > current_entry->len))
 						new_entry = current_entry;

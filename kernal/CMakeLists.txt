@@ -31,3 +31,5 @@ set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_LINK_EXECUTABLE})
 
 add_executable(kernal "${PROJECT_SOURCE_DIR}/src/kernal_loader.asm" ${ASM_NASM_SOURCES} ${C_SOURCES})
 target_include_directories(kernal PRIVATE "${PROJECT_SOURCE_DIR}/src")
+math(EXPR FREE_SECTOR_START "${KERNAL_SECTOR_COUNT} + 1")
+target_compile_definitions(kernal PRIVATE FREE_SECTOR_START=${FREE_SECTOR_START})

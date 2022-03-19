@@ -1,10 +1,11 @@
 #include "io/cli.h"
+
 #include "utils/int.h"
 #include "mem/dyn.h"
 
 void cli_write_int(int16_t int_num) {
 	uint8_t digit_count = 0;
-	{ // Calculate the int_num of digits
+	{ // Calculate the number of digits in int_num
 		int16_t abs_int_num = (int_num < 0) ? (-int_num) : int_num;
 		do {
 			abs_int_num /= 10;
@@ -13,17 +14,17 @@ void cli_write_int(int16_t int_num) {
 	}
 
 	char *int_num_str = dyn_alloc(digit_count + 2);
-	char *digits_str = int_num_str;
+	char *digit_str = int_num_str;
 
 	if (int_num < 0) {
 		int_num_str[0] = '-';
 		int_num = -int_num;
-		digits_str = int_num_str + 1;
+		digit_str = int_num_str + sizeof(char);
 	}
 
-	digits_str[digit_count] = '\0';
+	digit_str[digit_count] = '\0';
 	for (uint8_t i = 1; i <= digit_count; i++) {
-		digits_str[digit_count - i] = (int_num % 10) + '0';
+		digit_str[digit_count - i] = (int_num % 10) + '0';
 		int_num /= 10;
 	}
 
