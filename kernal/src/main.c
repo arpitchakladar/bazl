@@ -6,11 +6,11 @@
 #include "io/disk.h"
 #include "io/disk/fs.h"
 
+const uintptr_t user_name_max_len = 128;
+
 void main() {
 	cli_write("Hello From Bazl!\r\n");
-	uintptr_t user_name_max_len = 128;
 	char *user_name;
-	file_create("Username.txt", user_name_max_len);
 	file_read("Username.txt", (uint8_t **) &user_name);
 	if (user_name[0] == '\0') {
 		cli_write("Enter your user name : ");
