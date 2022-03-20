@@ -2,6 +2,8 @@ bits 16
 
 extern sys_call_cli_write
 extern sys_call_cli_read
+extern sys_call_dyn_alloc
+extern sys_call_dyn_dealloc
 extern sys_call_file_create
 extern sys_call_file_rename
 extern sys_call_file_delete
@@ -25,6 +27,8 @@ sys_call:
 .jmp_table:
 	dw sys_call_cli_write
 	dw sys_call_cli_read
+	dw sys_call_dyn_alloc
+	dw sys_call_dyn_dealloc
 	dw sys_call_file_create
 	dw sys_call_file_rename
 	dw sys_call_file_delete

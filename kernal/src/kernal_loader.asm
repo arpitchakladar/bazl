@@ -28,7 +28,7 @@ _start:
 	push ax
 	mov ax, wrong_file_name
 	push ax
-	mov ax, 2
+	mov ax, 4
 	push ax
 	int 0x22
 
@@ -36,7 +36,7 @@ _start:
 	push ax
 	mov ax, wrong_file_name
 	push ax
-	mov ax, 3
+	mov ax, 5
 	push ax
 	int 0x22
 

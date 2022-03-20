@@ -22,9 +22,9 @@ uint8_t get_sec_count(uint16_t len) {
 }
 
 uint8_t find_file(char *name, file_t **dst_file) {
-	file_t *file = dyn_alloc(sizeof(file_t));
+	file_t *file = dyn_alloc(512);
 	for (uint8_t sec = FREE_SECTOR_START; sec < last_free_sec; sec += file->sec_count) {
-		disk_read_buf((uint8_t *) file, sec, sizeof(file_t));
+		disk_read_sec((uint8_t *) file, sec, 1);
 		if (file->occupied && str_equal(name, file->name)) {
 			*dst_file = file;
 			return sec;

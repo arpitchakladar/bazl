@@ -32,9 +32,8 @@ scripts/test-qemu.sh
 ```
 
 ### ToDo List
-- Add more interrupts.
+- Add more system calls.
 - Add processes and executables.
 - Add a user/permission system.
-- Add and manage processes or external programs.
-- Use memory segmentation, to increase usable memory to 1mb.
+- Use memory segmentation.
 - Switch to 32-bit protected mode.
