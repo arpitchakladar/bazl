@@ -6,7 +6,7 @@
 #include "io/disk.h"
 #include "io/disk/fs.h"
 
-const uintptr_t user_name_max_len = 128;
+const uintptr_t USER_NAME_MAX_LENGTH = 128;
 
 void main() {
 	cli_write("Hello From Bazl!\r\n");
@@ -14,9 +14,9 @@ void main() {
 	file_read("Username.txt", (uint8_t **) &user_name);
 	if (user_name[0] == '\0') {
 		cli_write("Enter your user name : ");
-		cli_read(user_name, '\r', user_name_max_len);
+		cli_read(user_name, '\r', USER_NAME_MAX_LENGTH);
 		cli_write("\r\n");
-		file_write("Username.txt", user_name, user_name_max_len);
+		file_write("Username.txt", user_name, USER_NAME_MAX_LENGTH);
 	}
 	cli_write("Hi, ");
 	cli_write(user_name);
