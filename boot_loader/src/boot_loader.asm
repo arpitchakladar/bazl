@@ -7,8 +7,8 @@ init:; Initialize segment registers
 	mov ds, ax
 	mov es, ax
 	mov ss, ax
-	mov sp, 0x7c00
-	mov bp, 0x7c00
+	mov sp, KERNAL_START
+	mov bp, KERNAL_START
 
 	push dx ; Store the boot drive number
 
@@ -36,11 +36,10 @@ load_kernal_sector:
 	mov ch, 0
 	mov cl, 2
 	mov dh, 0
-	mov bx, kernal
+	mov bx, KERNAL_START
 	int 0x13
 
-	jmp kernal
+	jmp KERNAL_START
 
 times 510-($-$$) db 0
 dw 0xaa55
-kernal:

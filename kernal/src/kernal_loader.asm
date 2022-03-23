@@ -41,7 +41,7 @@ _start:
 	int 0x22
 
 	call main
-	hlt
+	jmp $
 
 wrong_file_name:
 	db "Username1.txt", 0

@@ -11,7 +11,7 @@ typedef struct {
 } alloc_t;
 
 #define ALLOCATION_COUNT 64
-#define alloc_entries ((alloc_t *) 0xa400)
+#define alloc_entries ((alloc_t *) 0x500)
 static void *last_alloc_ptr = alloc_entries + (sizeof(alloc_t) * ALLOCATION_COUNT);
 
 void *dyn_alloc(uintptr_t len) {
@@ -36,12 +36,10 @@ void *dyn_alloc(uintptr_t len) {
 	if (!occupied_available) {
 		void *next_last_alloc_ptr = last_alloc_ptr + len;
 
-		if (((uintptr_t) next_last_alloc_ptr) < 0xffff) {
-			free_entry.ptr = last_alloc_ptr;
-			free_entry.len = len;
-			free_entry.occupied = true;
-			last_alloc_ptr = next_last_alloc_ptr;
-		}
+		free_entry.ptr = last_alloc_ptr;
+		free_entry.len = len;
+		free_entry.occupied = true;
+		last_alloc_ptr = next_last_alloc_ptr;
 	}
 
 	return free_entry.ptr;

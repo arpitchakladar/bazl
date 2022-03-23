@@ -12,7 +12,7 @@ file(GLOB_RECURSE ASM_NASM_SOURCES "${PROJECT_SOURCE_DIR}/src/*.asm")
 file(GLOB_RECURSE C_SOURCES "${PROJECT_SOURCE_DIR}/src/*.c")
 
 # Linking
-set(CMAKE_EXE_LINKER_FLAGS "--oformat binary -m elf_i386 -Ttext 0x7e00")
+set(CMAKE_EXE_LINKER_FLAGS "--oformat binary -m elf_i386 -Ttext ${KERNAL_START}")
 set(CMAKE_LINK_EXECUTABLE "<CMAKE_LINKER> <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
 
 # C
