@@ -1,11 +1,11 @@
 bits 16
 
-global sys_call_cli_write
-global sys_call_cli_read
-
 extern sys_call_end
 extern cli_write
 extern cli_read
+
+global sys_call_cli_write
+global sys_call_cli_read
 
 sys_call_cli_write:
 	mov dx, 0

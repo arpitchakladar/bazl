@@ -11,6 +11,7 @@ const uintptr_t USER_NAME_MAX_LENGTH = 128;
 void main() {
 	cli_write("Hello From Bazl!\r\n");
 	char *user_name;
+	file_create("Username.txt", 128);
 	file_read("Username.txt", (uint8_t **) &user_name);
 	if (user_name[0] == '\0') {
 		cli_write("Enter your user name : ");
