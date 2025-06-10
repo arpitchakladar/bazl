@@ -10,7 +10,7 @@ include(Hex)
 include(Kernel)
 
 add_subdirectory(kernel)
-add_subdirectory(boot_loader)
+add_subdirectory(boot-loader)
 
 project(Bazl)
 
