@@ -1,7 +1,6 @@
 [org 0x7c00]
 
 ; Constants in memory
-KERNEL_LOCATION equ 0x1000
 CODE_SEG equ code_descriptor - GDT_Start
 DATA_SEG equ data_descriptor - GDT_Start
 
@@ -16,7 +15,7 @@ init:
 	mov bp, 0x8000              ; Sets Base Pointer (stack frame) to 0x8000
 	mov sp, bp
 
-	mov bx, KERNEL_LOCATION   ; Sets BX to the target address for the kernel (0x1000)
+	mov bx, KERNEL_START   ; Sets BX to the target address for the kernel (0x1000)
 	mov dh, 2                   ; Specifies to load 2 sectors
 
 	mov ah, 0x02                ; BIOS interrupt 0x13, function 0x02 (Read Disk Sectors)
@@ -77,10 +76,10 @@ start_protected_mode:
 	mov fs, ax              ; Set FS register
 	mov gs, ax              ; Set GS register
 
-	mov ebp, 0x90000        ; Set 32-bit stack base pointer
+	mov ebp, 0x9FC00        ; Set 32-bit stack base pointer
 	mov esp, ebp            ; Set 32-bit stack pointer
 
-	jmp KERNEL_LOCATION   ; Jump to the loaded kernel
+	jmp KERNEL_START   ; Jump to the loaded kernel
 
 times 510-($-$$) db 0
 dw 0xaa55

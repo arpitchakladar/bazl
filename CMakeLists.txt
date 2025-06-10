@@ -9,9 +9,9 @@ project(Bazl LANGUAGES ASM_NASM C)
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(Hex)
-include(Kernal)
+include(Kernel)
 
-add_subdirectory(kernal)
+add_subdirectory(kernel)
 add_subdirectory(boot_loader)
 
 include(Bazl)

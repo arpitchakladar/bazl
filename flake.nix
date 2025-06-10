@@ -1,28 +1,37 @@
 {
-	description = "Dev environment with cmake, nasm, i386-elf-gcc, and binutils";
+	description = "OS-dev shell with CMake, NASM and i686-elf tool-chain";
 
-	inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-	outputs = { self, nixpkgs }: {
-		devShells.default = let
-			system = "x86_64-linux";
-			pkgs = import nixpkgs { inherit system; };
-		in
-			pkgs.mkShell {
-				buildInputs = [
-					pkgs.cmake
-					pkgs.nasm
-					pkgs.pkgsCross.gnu32.buildPackages.gcc
-					pkgs.pkgsCross.gnu32.buildPackages.binutils
-				];
-
-				shellHook = ''
-					echo "Development environment ready."
-					echo "CMake version: $(cmake --version | head -n1)"
-					echo "NASM version: $(nasm -v)"
-					echo "i386-elf-gcc version: $(${CROSS_GCC:-i686-unknown-linux-gnu-gcc} --version | head -n1)"
-				'';
-			};
+	inputs = {
+		nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+		flake-utils.url = "github:numtide/flake-utils";
 	};
-}
 
+	outputs = { self, nixpkgs, flake-utils }:
+		flake-utils.lib.eachDefaultSystem (system:
+			let
+				pkgs = import nixpkgs {
+					inherit system;
+				};
+			in {
+				devShells.default = pkgs.mkShell {
+					packages = with pkgs; [
+						cmake
+						nasm
+						ninja
+						qemu
+						xxd
+						pkgsCross.i686-embedded.buildPackages.gcc
+						pkgsCross.i686-embedded.buildPackages.binutils
+					];
+
+					# Optional conveniences
+					shellHook = ''
+						export TARGET=i686-elf
+						export CC=${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}/bin/i686-elf-gcc
+						export LD=${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}/bin/i686-elf-ld
+						export PATH=$PATH:${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}/bin
+						echo ${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}
+					'';
+				};
+			});
+}
