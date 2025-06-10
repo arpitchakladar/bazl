@@ -26,11 +26,7 @@
 
 					# Optional conveniences
 					shellHook = ''
-						export TARGET=i686-elf
-						export CC=${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}/bin/i686-elf-gcc
-						export LD=${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}/bin/i686-elf-ld
 						export PATH=$PATH:${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}/bin
-						echo ${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}
 					'';
 				};
 			});

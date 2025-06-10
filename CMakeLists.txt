@@ -4,8 +4,6 @@ if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set (CMAKE_BUILD_TYPE "Debug")
 endif ()
 
-project(Bazl LANGUAGES ASM_NASM C)
-
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(Hex)
@@ -13,6 +11,8 @@ include(Kernel)
 
 add_subdirectory(kernel)
 add_subdirectory(boot_loader)
+
+project(Bazl)
 
 include(Bazl)
 

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.22)
 
-set(CMAKE_EXE_LINKER_FLAGS "-nostdlib -ffreestanding")
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_SYSTEM_PROCESSOR i686)
+
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 project(BazlKernal LANGUAGES ASM_NASM C)

@@ -1,2 +1,3 @@
-set(CMAKE_EXE_LINKER_FLAGS "--oformat binary -Ttext ${KERNEL_START}")
+set(CMAKE_LINKER i686-elf-ld)
+set(CMAKE_EXE_LINKER_FLAGS "--oformat binary -nostdlib -Ttext ${KERNEL_START}")
 set(CMAKE_LINK_EXECUTABLE "<CMAKE_LINKER> <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")

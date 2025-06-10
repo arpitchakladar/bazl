@@ -1,3 +1,4 @@
+set(CMAKE_C_COMPILER i686-elf-gcc)
 set(CMAKE_C_FLAGS "-ffreestanding -m32 -g")
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
