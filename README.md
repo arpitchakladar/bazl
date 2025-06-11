@@ -9,8 +9,8 @@ A simple CLI OS for intel 386 architecture. Runs in 16-bit real mode, and is wri
 ### Requirements
 - cmake (>= 3.22)
 - nasm (>= 2.15.05)
-- i386-elf-gcc (>= 11.2.0)
-- i386-elf-binutils (>= 2.38.0)
+- i686-elf-gcc (>= 13.2.0)
+- i686-elf-ld (>= 2.41)
 
 ### Getting Started
 1. Clone the repository.
@@ -18,7 +18,7 @@ A simple CLI OS for intel 386 architecture. Runs in 16-bit real mode, and is wri
 git clone https://github.com/arpitchakladar/bazl
 cd bazl
 ```
-2. Run a build script. (For the first time "i386-elf-gcc" and "i386-elf-ld" must be in your PATH)
+2. Run a build script. (For the first time "i686-elf-gcc" and "i686-elf-ld" must be in your PATH)
 ```sh
 scripts/build-make.sh
 ```
@@ -36,4 +36,3 @@ scripts/test-qemu.sh
 - Add processes and executables.
 - Add a user/permission system.
 - Use memory segmentation.
-- Switch to 32-bit protected mode.

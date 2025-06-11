@@ -1,10 +1,9 @@
 #include "utils/core.h"
 
-void main() {
+void main(void) {
+	volatile uint16_t* video = (uint16_t*)0xB8000;
+
 	for (uint8_t i = 0; i < 26; i++) {
-		uint8_t j = i * 2;
-		*(char*)(0xb8000 + j) = 'A' + (char) i;
-		*(char*)(0xb8001 + j) = 0x0f;
+		video[i] = 0x0F41 + i;
 	}
-	return;
 }
