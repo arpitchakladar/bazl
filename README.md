@@ -1,5 +1,5 @@
 # Bazl
-A simple CLI OS for intel 386 architecture. Runs in 16-bit real mode, and is written in NASM assembly and C.
+A simple CLI OS for x86 architecture. Runs in 32-bit protected mode, and is written in NASM assembly and C.
 
 ## Table Of Contents
 - [Requirements](#requirements)
