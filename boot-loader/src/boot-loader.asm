@@ -1,4 +1,5 @@
 [org 0x7c00]
+[bits 16]
 
 ; Constants in memory
 CODE_SEG equ code_descriptor - GDT_Start ; Offset in GDT
