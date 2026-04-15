@@ -1,5 +1,7 @@
 [bits 32]
-[extern main]
+
+extern main
+
 global _start
 
 section .text
