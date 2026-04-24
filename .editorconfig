@@ -1,0 +1,13 @@
+root = true
+
+[*]
+indent_style = tab
+
+[*.{c,h}]
+indent_style = tab
+
+[CMakeLists.txt]
+indent_style = tab
+
+[*.asm]
+indent_style = tab
