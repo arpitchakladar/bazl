@@ -1,12 +1,9 @@
 #include "vga/vga.h"
 #include "utils/int.h"
 
-enum
-{
-    VGA_ADDRESS = 0xB8000,
-    VGA_WIDTH   = 80,
-    VGA_HEIGHT  = 25
-};
+#define VGA_ADDRESS 0xB8000
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25
 
 static uint16_t cursor_x = 0;
 static uint16_t cursor_y = 0;

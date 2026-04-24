@@ -16,9 +16,16 @@ Checks: >
   -cppcoreguidelines-pro-bounds-pointer-arithmetic,
   -cppcoreguidelines-pro-type-reinterpret-cast,
   -cppcoreguidelines-avoid-magic-numbers,
-  -cppcoreguidelines-pro-type-vararg
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-avoid-non-const-global-variables
 
-HeaderFilterRegex: '^(kernel|boot-loader)/.*\.(h|hpp)$'
+ExtraArgs:
+  - -nostdinc
+  - -nostdlib
+  - -ffreestanding
+  - -Ikernel/src
+
+HeaderFilterRegex: '^(kernel|boot-loader)/.*\.(h|hpp|c|cpp)$'
 
 CheckOptions:
   - key: readability-braces-around-statements.ShortStatementLines
