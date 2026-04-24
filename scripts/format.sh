@@ -1,0 +1,2 @@
+#!/bin/sh
+find ./kernel ./boot-loader -type f \( -name "*.c" -o -name "*.h" \) -exec clang-format -i {} +

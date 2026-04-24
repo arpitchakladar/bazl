@@ -39,7 +39,30 @@
                 xxd
                 pkgsCross.i686-embedded.buildPackages.gcc
                 pkgsCross.i686-embedded.buildPackages.binutils
+                clang-tools  # provides clangd
+                asm-lsp
               ];
+
+              git-hooks.hooks = {
+                clang-format = {
+                  enable = true;
+                  name = "clang-format";
+                  entry = "${pkgs.clang-tools}/bin/clang-format -i --style=file";
+                  files = "\\.(c|cpp|h|hpp)$";
+                  pass_filenames = true;
+                };
+                clang-tidy = {
+                  enable = true;
+                  name = "clang-tidy";
+                  entry = "${pkgs.clang-tools}/bin/clang-tidy -p build";
+                  files = "\\.(c|cpp)$";
+                  pass_filenames = true;
+                };
+              };
+
+              env = {
+                CMAKE_EXPORT_COMPILE_COMMANDS = "1";
+              };
 
               enterShell = ''
                 export PATH=$PATH:${pkgs.pkgsCross.i686-embedded.buildPackages.gcc}/bin

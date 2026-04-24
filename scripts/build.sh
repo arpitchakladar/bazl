@@ -6,4 +6,5 @@ if [ ! -z $LINKER ] && [ ! -z $COMPILER ]
 then
 	PARAMS="$PARAMS -DLINKER=$LINKER -DC_COMPILER=$COMPILER"
 fi
-cmake $PARAMS $@
+CMAKE_EXPORT_COMPILE_COMMANDS=1 cmake $PARAMS $@
+cp build/compile_commands.json compile_commands.json
