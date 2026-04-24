@@ -1,2 +1,2 @@
 #!/bin/sh
-qemu-system-i386 -m 1m -drive format=raw,file=build/bazl-test.img
+qemu-system-x86_64 -drive format=raw,file="build/bazl",index=0,if=floppy,  -m 128M

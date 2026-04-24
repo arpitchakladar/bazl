@@ -1,0 +1,28 @@
+CompileFlags:
+  Add:
+    - -nostdlib
+    - -nostdinc
+    - -ffreestanding
+    - -m32
+    - -g
+    - -I/home/arpit/Projects/bazl/kernel/src
+  Compiler: clang
+  Remove:
+    - -mno-outline-atomics
+    - -f
+    - elf
+    - bin
+
+InlayHints:
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
+
+Diagnostics:
+  UnusedIncludes: None
+  MissingIncludes: None
+  ClangTidy:
+    Add: []
+    Remove:
+      - modernize-macro-to-enum
+      - cppcoreguidelines-avoid-non-const-global-variables
