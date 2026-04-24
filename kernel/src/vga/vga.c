@@ -22,6 +22,16 @@ static void vga_update_cursor() {
 	outb(0x3D5, (uint8_t)pos);
 }
 
+static void vga_new_line() {
+	cursor_x = 0;
+	cursor_y++;
+	if (cursor_y >= VGA_HEIGHT) {
+		vga_scroll_up();
+		cursor_y = VGA_HEIGHT - 1;
+	}
+	vga_update_cursor();
+}
+
 void vga_write_char(char c, uint8_t color) {
 	if (c == '\n') {
 		vga_new_line();
@@ -41,19 +51,8 @@ void vga_write_char(char c, uint8_t color) {
 
 void vga_write_text(const char *text, uint8_t color) {
 	while (*text) {
-		vga_write_char(*text, color);
-		text++;
+		vga_write_char(*text++, color);
 	}
-}
-
-void vga_new_line() {
-	cursor_x = 0;
-	cursor_y++;
-	if (cursor_y >= VGA_HEIGHT) {
-		vga_scroll_up();
-		cursor_y = VGA_HEIGHT - 1;
-	}
-	vga_update_cursor();
 }
 
 void vga_reset() {
@@ -71,9 +70,15 @@ void vga_scroll_up() {
 			vga_buffer[(y * VGA_WIDTH) + x] = vga_buffer[((y + 1) * VGA_WIDTH) + x];
 		}
 	}
+
 	for (uint16_t x = 0; x < VGA_WIDTH; x++) {
 		vga_buffer[((VGA_HEIGHT - 1) * VGA_WIDTH) + x] =
 				(VGA_COLOR_BLACK << 8) | ' ';
 	}
+
+	if (cursor_y > 0) {
+		cursor_y -= 1;
+	}
+
 	vga_update_cursor();
 }

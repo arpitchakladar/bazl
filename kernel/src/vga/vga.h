@@ -27,6 +27,5 @@ static inline uint8_t vga_color(enum vga_color fg, enum vga_color bg) {
 
 void vga_write_char(char c, uint8_t color);
 void vga_write_text(const char *text, uint8_t color);
-void vga_new_line();
 void vga_reset();
 void vga_scroll_up();
