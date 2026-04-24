@@ -1,10 +1,10 @@
 [bits 32]
 
-extern main
+extern kmain
 
 global _start
 
 section .text
 _start:
-	call main
+	call kmain
 	hlt
