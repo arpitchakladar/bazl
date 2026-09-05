@@ -30,6 +30,17 @@ _start:
 	mov al, byte 0x03                ; AL = mode 0x03 (80x25 color text mode)
 	int 0x10                         ; Calls BIOS interrupt 0x10 to set the video mode
 
+	; Enable A20 line
+	mov ax, 0x2401        ; BIOS INT 15h Fast A20 enable
+	int 0x15
+	jnc .a20_done         ; If Carry Flag is clear, it succeeded
+
+	in al, 0x92           ; Fallback: Fast A20 via Port 0x92
+	or al, 2
+	and al, 0xFE
+	out 0x92, al
+
+.a20_done:
 	cli ; disable interrupts
 	; Enter 32 bit protected mode
 	lgdt [GDT_Descriptor]
